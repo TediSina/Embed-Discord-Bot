@@ -55,9 +55,9 @@ def get_colour_list(): # Iterate over discord.Colour methods and add 25 (max amo
 @app_commands.describe(colour="Pick a colour:")
 @app_commands.choices(colour=get_colour_list())
 async def create_msg(interaction: discord.Interaction,
-                        title: str,
-                        description: str,
-                        colour: int,
+                        title: Optional[str],
+                        description: Optional[str],
+                        colour: Optional[int],
                         image_url: Optional[str],
                         thumbnail_image_url: Optional[str],
                         author_name: Optional[str],
