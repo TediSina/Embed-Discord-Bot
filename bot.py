@@ -2,9 +2,9 @@ import discord
 from discord import app_commands
 from discord.embeds import Embed
 from typing import Optional
-from config import TOKEN, GUILD # Create a config.py file with those variables and set the IDs (different to everyone).
+from config import TOKEN, GUILD, STATUS, ACTIVITY # Please check config.py.
 
-THIS_GUILD = discord.Object(id=GUILD)
+THIS_GUILD = discord.Object(id=GUILD) # Check config.py.
 
 class ThisClient(discord.Client):
     def __init__(self, *, intents: discord.Intents):
@@ -23,7 +23,7 @@ client = ThisClient(intents=intents)
 
 @client.event
 async def on_ready():
-    await client.change_presence(status=discord.Status.dnd, activity=discord.Game("BlockySMP.net")) # Change this to whatever you like.
+    await client.change_presence(status=STATUS, activity=ACTIVITY) # Please check config.py if you haven't already.
 
 
 def get_colour_list(): # Iterate over discord.Colour methods and add 25 (max amount) colours to the choice list.
@@ -78,5 +78,5 @@ async def create_msg(interaction: discord.Interaction,
 
     await interaction.response.send_message(embed=embed)
 
-# Run the bot
-client.run(TOKEN)
+# Run the bot.
+client.run(TOKEN) # Please check config.py if you haven't already.
