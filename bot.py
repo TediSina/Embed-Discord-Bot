@@ -182,5 +182,32 @@ async def delete_message(interaction: discord.Interaction, message_id: int):
         await interaction.response.send_message("Message not found.")
 
 
+async def edit_message_by_id(message_id: int, **kwargs) -> bool:
+    # Construct the SET clause dynamically based on the provided kwargs.
+    set_clause = ', '.join(f"{key} = ?" for key in kwargs.keys() if kwargs[key] is not None)
+    values = tuple(kwargs[key] for key in kwargs.keys() if kwargs[key] is not None) + (message_id,)
+    
+    cursor.execute(f"UPDATE messages SET {set_clause} WHERE message_id = ?", values)
+    conn.commit()
+    return cursor.rowcount > 0
+
+@client.tree.command(name="edit_message", description="Edit a message by its ID")
+async def edit_message(interaction: discord.Interaction, message_id: int,
+                        title: Optional[str] = None, description: Optional[str] = None,
+                        colour: Optional[int] = None, image_url: Optional[str] = None,
+                        thumbnail_image_url: Optional[str] = None, author_name: Optional[str] = None,
+                        author_name_url: Optional[str] = None, author_icon_url: Optional[str] = None,
+                        footer_text: Optional[str] = None, footer_icon_url: Optional[str] = None):
+    edited = await edit_message_by_id(message_id, title=title, description=description,
+                                        colour=colour, image_url=image_url,
+                                        thumbnail_image_url=thumbnail_image_url, author_name=author_name,
+                                        author_name_url=author_name_url, author_icon_url=author_icon_url,
+                                        footer_text=footer_text, footer_icon_url=footer_icon_url)
+    if edited:
+        await interaction.response.send_message(f"Message with ID {message_id} edited successfully.")
+    else:
+        await interaction.response.send_message("Message not found or no changes were made.")
+
+
 # Run the bot.
 client.run(TOKEN) # Please check config.py if you haven't already.
