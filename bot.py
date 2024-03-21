@@ -185,6 +185,9 @@ async def delete_message(interaction: discord.Interaction, message_id: int):
 async def edit_message_by_id(message_id: int, **kwargs) -> bool:
     # Construct the SET clause dynamically based on the provided kwargs.
     set_clause = ', '.join(f"{key} = ?" for key in kwargs.keys() if kwargs[key] is not None)
+    if not set_clause:
+        return False  # No parameters provided to update.
+    
     values = tuple(kwargs[key] for key in kwargs.keys() if kwargs[key] is not None) + (message_id,)
     
     cursor.execute(f"UPDATE messages SET {set_clause} WHERE message_id = ?", values)
