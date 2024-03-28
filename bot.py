@@ -104,6 +104,14 @@ def get_colour_list():
                     print(e)
 
     def get_colour_list_key(e):
+        """
+        Returns the name of the given element as the key for a colour list.
+
+        :param e: An element object.
+        :type e: Element
+        :return: The name of the element as a string.
+        :rtype: str
+        """
         return e.name
 
     colour_list.sort(key=get_colour_list_key)
