@@ -44,6 +44,17 @@ class ThisClient(discord.Client):
         self.tree = app_commands.CommandTree(self)
 
     async def setup_hook(self):
+        """
+        Asynchronously sets up the hook for the given instance.
+
+        This function copies the global commands to the specified guild and synchronizes the tree with the guild.
+
+        Parameters:
+            self (ClassName): The instance of the class.
+
+        Returns:
+            None
+        """
         self.tree.copy_global_to(guild=THIS_GUILD)
         await self.tree.sync(guild=THIS_GUILD)
 
