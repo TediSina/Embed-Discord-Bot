@@ -4,7 +4,7 @@ import os
 from discord import app_commands
 from discord.embeds import Embed
 from typing import Optional
-from config import TOKEN, GUILD, STATUS, ACTIVITY # Please check config.py.
+from config import TOKEN, GUILD, STATUS, ACTIVITY # TODO: Please check config.py.
 
 dirname = os.path.dirname(__file__)
 db_filename = os.path.join(dirname, "messages.db")
